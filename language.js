@@ -1,8 +1,9 @@
 (function (root) {
   'use strict';
-  const supported = ['en', 'zh', 'hi', 'es', 'fr', 'ar', 'bn', 'pt', 'id', 'ur'];
+  const supported = ['en', 'hi', 'es', 'fr', 'ar', 'bn', 'pt', 'id', 'ur'];
   const countryGroups = {
-    zh: ['CN', 'TW', 'HK', 'MO'], hi: ['IN'], bn: ['BD'], ur: ['PK'], id: ['ID'],
+    en: ['US', 'GB', 'AU', 'NZ', 'IE', 'CA', 'NG', 'GH', 'KE', 'UG', 'ZA'],
+    hi: ['IN'], bn: ['BD'], ur: ['PK'], id: ['ID'],
     pt: ['BR', 'PT', 'AO', 'MZ', 'CV', 'GW', 'ST', 'TL'],
     es: ['ES', 'MX', 'AR', 'BO', 'CL', 'CO', 'CR', 'CU', 'DO', 'EC', 'SV', 'GT', 'HN', 'NI', 'PA', 'PY', 'PE', 'PR', 'UY', 'VE', 'GQ'],
     fr: ['FR', 'MC', 'BE', 'LU', 'BF', 'BI', 'BJ', 'CD', 'CG', 'CI', 'GA', 'GN', 'ML', 'NE', 'SN', 'TG', 'TD', 'CF', 'KM', 'MG', 'DJ', 'NC', 'PF'],
@@ -17,7 +18,7 @@
     return 'en';
   }
   function countryLocale(country) {
-    return Object.keys(countryGroups).find(language => countryGroups[language].includes(country)) || 'en';
+    return Object.keys(countryGroups).find(language => countryGroups[language].includes(country)) || null;
   }
   // Dependency injection keeps the real resolution path testable without sending IP lookups.
   function createEngine({ storage, fetchCountry, languages, render, now = Date.now }) {
@@ -43,7 +44,7 @@
           write('king3.country.v1', JSON.stringify({ country, expires: now() + 86400000 }));
         } catch { return; }
       }
-      if (request === generation && automatic) show(countryLocale(country), true);
+      if (request === generation && automatic) show(countryLocale(country) || browserLocale(languages), true);
     }
     function choose(value) {
       if (value === 'auto') { remove('king3.language.v1'); return detect(); }
@@ -65,7 +66,7 @@
   if (!root.document || !root.King3Locales) return;
 
   const catalog = root.King3Locales;
-  const names = { en: 'English', zh: '中文', hi: 'हिन्दी', es: 'Español', fr: 'Français', ar: 'العربية', bn: 'বাংলা', pt: 'Português', id: 'Bahasa Indonesia', ur: 'اردو' };
+  const names = { en: 'English', hi: 'हिन्दी', es: 'Español', fr: 'Français', ar: 'العربية', bn: 'বাংলা', pt: 'Português', id: 'Bahasa Indonesia', ur: 'اردو' };
   const select = document.querySelector('#language-select');
   const lookup = new Map(catalog.en.map((value, index) => [value, index]));
   const records = [];
@@ -82,7 +83,7 @@
   const extra = key => catalog.ui[locale][key];
   function render(language, automatic) {
     locale = language;
-    document.documentElement.lang = language === 'zh' ? 'zh-Hans' : language;
+    document.documentElement.lang = language;
     document.documentElement.dir = ['ar', 'ur'].includes(language) ? 'rtl' : 'ltr';
     for (const { node, index, prefix, suffix } of records) node.nodeValue = prefix + t(index) + suffix;
     document.title = t(0);
