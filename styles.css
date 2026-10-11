@@ -123,3 +123,28 @@ dialog{position:fixed;width:min(570px,calc(100% - 36px));max-height:85svh;overfl
 .provider-wordmarks>a:hover .provider-open,.provider-wordmarks>a:focus-visible .provider-open{opacity:1;transform:translate(2px,-2px)}
 .wall-tile:hover .wall-tile-arrow,.wall-tile:focus-visible .wall-tile-arrow{opacity:0}
 @media(prefers-reduced-motion:reduce){.provider-open{transition:none}}
+
+/* Language controls and natural layouts for international scripts. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.language-picker{display:flex;align-items:center;gap:8px;color:#ddcb8f;flex-shrink:0}
+.language-picker>svg{width:19px;height:19px;flex-shrink:0}
+.language-picker select{font:500 .8125rem 'Segoe UI','Nirmala UI',Arial,sans-serif;color:#e5e2cd;background:#25261f;border:1px solid #b7a66055;border-radius:6px;padding:8px 6px;min-height:38px;width:142px;cursor:pointer;outline-offset:3px}
+.language-picker select:focus-visible{outline:2px solid #f5d764}
+.language-picker option{background:#25261f;color:#f0ecda}
+.header-actions{gap:16px}.desktop-nav{gap:22px}.desktop-nav a{white-space:nowrap}.header-download{padding-inline:16px}
+.hero-actions{flex-wrap:wrap}.hero-facts>span,.unified-main>div,.provider-heading>*{min-width:0}
+.connect-card div,.affiliate-contact,.access-label,.stage-caption{overflow-wrap:anywhere}
+.connect-card div>span{direction:ltr;unicode-bidi:isolate;display:inline-block}
+html:lang(hi),html:lang(bn),html:lang(ar),html:lang(ur){--sans:'Nirmala UI','Segoe UI',Arial,sans-serif;--serif:'Nirmala UI','Segoe UI',Arial,sans-serif}
+html:lang(hi) h1,html:lang(bn) h1,html:lang(ar) h1,html:lang(ur) h1{line-height:1.35;letter-spacing:0}
+html:lang(hi) em,html:lang(bn) em,html:lang(ar) em,html:lang(ur) em{font-style:normal}
+html:lang(hi) .eyebrow,html:lang(bn) .eyebrow,html:lang(ar) .eyebrow,html:lang(ur) .eyebrow{letter-spacing:0}
+html[dir=rtl] .game-wall,html[dir=rtl] .provider-wordmarks{direction:ltr}
+html[dir=rtl] .wall-tile-caption{direction:rtl;text-align:right}
+html[dir=rtl] .hero-facts>span+span{padding-left:0;padding-right:30px;border-left:0;border-right:1px solid #d7c47144}
+html[dir=rtl] .dialog-close{right:auto;left:18px}
+html[dir=rtl] dialog h2{padding-right:0;padding-left:28px}
+html[dir=rtl] .hero-shade{background:linear-gradient(270deg,#13170ff0,#18190cd1 50%,#19180d88),linear-gradient(0deg,#14160feb,transparent)}
+@media(max-width:1250px){.desktop-nav{display:none}.menu-toggle{display:block}}
+@media(max-width:600px){.language-picker{gap:5px}.language-picker>svg{width:15px;height:15px}.language-picker select{width:90px;font-size:.75rem;padding:7px 3px}.header-download-label{display:none}.header-download>.download-icon{display:block;width:18px;height:18px}.header-actions .header-download{width:38px;height:38px;min-height:38px;padding:8px}.header-actions{gap:6px}.header-inner{gap:8px;width:calc(100% - 32px)}.menu-toggle{width:34px;padding:6px}.brand .official-wordmark{width:100px}.unified-hero h1{font-size:2.35rem}.hero-facts>span{font-size:.625rem}.hero-facts>span+span{padding-left:14px}.hero-facts{gap:14px}.unified-hero .connect-card strong{line-height:1.5}.unified-hero .connect-card small{font-size:.5625rem}.unified-hero .connect-card div>span{font-size:.625rem}html[dir=rtl] .hero-facts>span+span{padding-right:14px}.wall-toolbar{gap:12px}.wall-toolbar>span{font-size:.625rem}.wall-toolbar button{font-size:.625rem;flex-shrink:0}.stage-caption{letter-spacing:0}}
+@media(max-width:360px){.language-picker>svg{display:none}.language-picker select{width:88px}.header-inner>.brand img{width:88px;height:auto}.unified-hero h1{font-size:2.1rem}.hero-actions{gap:18px}.hero-facts strong{font-size:.8125rem}}

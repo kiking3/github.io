@@ -1,7 +1,8 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileNav = document.querySelector('#mobile-nav');
-function closeMenu() { mobileNav.hidden = true; menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'Open navigation'); }
-menuToggle.addEventListener('click', () => { const open = menuToggle.getAttribute('aria-expanded') !== 'true'; menuToggle.setAttribute('aria-expanded', String(open)); menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); mobileNav.hidden = !open; });
+const uiText = (key, fallback) => window.King3I18n?.extra(key) || fallback;
+function closeMenu() { mobileNav.hidden = true; menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', uiText('openMenu', 'Open navigation')); }
+menuToggle.addEventListener('click', () => { const open = menuToggle.getAttribute('aria-expanded') !== 'true'; menuToggle.setAttribute('aria-expanded', String(open)); menuToggle.setAttribute('aria-label', open ? uiText('closeMenu', 'Close navigation') : uiText('openMenu', 'Open navigation')); mobileNav.hidden = !open; });
 mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && !mobileNav.hidden) { closeMenu(); menuToggle.focus(); } });
 const gameWall = document.querySelector('#game-wall');
@@ -11,12 +12,13 @@ let wallPaused = reduceMotion.matches;
 function updateWallMotion() {
   gameWall.classList.toggle('is-paused', wallPaused);
   motionToggle.setAttribute('aria-pressed', String(wallPaused));
-  motionToggle.querySelector('.motion-label').textContent = wallPaused ? 'Resume animation' : 'Pause animation';
+  motionToggle.querySelector('.motion-label').textContent = wallPaused ? uiText('resume', 'Resume animation') : uiText('pause', 'Pause animation');
   motionToggle.querySelector('.motion-symbol').textContent = wallPaused ? '▷' : 'Ⅱ';
 }
 motionToggle.addEventListener('click', () => { wallPaused = !wallPaused; updateWallMotion(); });
 reduceMotion.addEventListener('change', event => { wallPaused = event.matches; updateWallMotion(); });
 updateWallMotion();
+document.addEventListener('king3:languagechange', updateWallMotion);
 
 // A full repeating block must be wider than the visible lane, including overscan.
 const wallLanes = [...gameWall.querySelectorAll('.wall-lane')].map(lane => ({
